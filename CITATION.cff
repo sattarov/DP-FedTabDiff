@@ -1,0 +1,14 @@
+cff-version: 1.2.0
+title: "DP-FedTabDiff"
+message: "If you use this software, please cite the associated paper."
+type: software
+authors:
+  - family-names: Sattarov
+    given-names: Timur
+  - family-names: Schreyer
+    given-names: Marco
+  - family-names: Borth
+    given-names: Damian
+repository-code: https://github.com/sattarov/DP-FedTabDiff
+license: MIT
+url: https://arxiv.org/abs/2412.16083
