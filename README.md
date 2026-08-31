@@ -36,12 +36,25 @@ The core building blocks can be used independently:
 
 ```python
 import torch
-from dp_fedtabdiff.diffusion import GaussianDiffusion, TabularMLP
-from dp_fedtabdiff.federated import fedavg
+from torch.utils.data import DataLoader
+from dp_fedtabdiff.diffusion import GaussianDiffusion
+from dp_fedtabdiff.findiff import FinDiff, FinDiffPrivateWrapper
+from dp_fedtabdiff.privacy import PersistentPrivacyEngine
+
+train_num = torch.randn(5, 2)
+train_cat = torch.randint(0, 10, (5, 2)
+train_dataset = torch.cat((train_num, train_cat), axis=1)
 
 diffusion = GaussianDiffusion(steps=500)
-model = TabularMLP(data_dim=16, hidden_dims=(128, 128), condition_dim=64)
-x_t, noise = diffusion.q_sample(torch.randn(8, 16), torch.randint(0, 500, (8,)))
+client = FinDiff([2, 8], 2, embedding_dim=2, hidden_dims=(128, 128), condition_dim=64, num_labels=2, embedding_learned=False)
+private_model = FinDiffPrivateWrapper(client, diffusion)
+
+optimizer = torch.optim.Adam(private_model.parameters(), lr=1e-3)
+loader = DataLoader(TensorDataset(train_dataset), batch_size=512, shuffle=True)
+privacy = PersistentPrivacyEngine(target_delta=1e-5, max_grad_norm=1.0, target_epsilon=3.0, epochs=5)
+private_model, optimizer, loader = privacy.attach(private_model, optimizer, loader)
+
+private_model.train()
 ```
 
 ## Repository map
