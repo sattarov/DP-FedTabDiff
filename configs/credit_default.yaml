@@ -1,0 +1,14 @@
+dataset: credit_default
+diffusion_steps: 500
+beta_start: 0.0001
+beta_end: 0.02
+hidden_dims: [1024, 1024, 1024]
+batch_size: 16
+communication_rounds: 3000
+local_updates: 100
+clients: 5
+strategy: fedavg
+epsilon: 1.0
+delta: null  # set to 1 / number of training rows
+max_grad_norm: 1.0
+noise_multiplier: null  # derive and record with a privacy accountant
